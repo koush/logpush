@@ -72,7 +72,10 @@ var post = function(options, callback) {
 
 var registrations = {};
 
-app.get('/:registration_id', function(req, res){
+app.get('/:registration_id', function(req, res) {
+  res.header('Cache-Control', 'no-cache');
+  res.header('Expires', 'Fri, 31 Dec 1998 12:00:00 GMT');
+
   var registrationId = req.params.registration_id;
   var now = Date.now();
   var entry = registrations[registrationId];
@@ -115,12 +118,15 @@ app.get('/:registration_id', function(req, res){
       "source": "logmonkey",
       "service": "ac2dm"
   };
+  console.log('retrieving google auth');
   post({module: https, url: 'https://www.google.com/accounts/ClientLogin', data: data }, function(err, data) {
     if (err) {
+      console.log('retrieving google auth failed');
       res.send(err);
       cleanup();
       return;
     }
+    console.log('retrieved google auth');
     
     var auth;
     var lines = data.split('\n');
@@ -151,11 +157,15 @@ app.get('/:registration_id', function(req, res){
         cleanup();
         return;
       }
+      console.log('push result: ');
+      console.log(data);
     });
   });
 });
 
 app.post('/:registration_id', function(req, res) {
+  res.header('Cache-Control', 'no-cache');
+  res.header('Expires', 'Fri, 31 Dec 1998 12:00:00 GMT');
   console.log('post received');
   var registrationId = req.params.registration_id;
   
@@ -174,7 +184,24 @@ app.post('/:registration_id', function(req, res) {
       listener.data(data);
     }
     
-    console.log(data);
+    console.log('data received');
+  }).on('end', function() {
+    var entry = registrations[registrationId];
+    if (!entry || Object.keys(entry).length == 0) {
+      console.log('unregistering');
+      delete registrations[registrationId];
+      req.connection.destroy();
+      return;
+    }
+    
+    for (var listener in entry) {
+      listener = entry[listener];
+      listener.end();
+    }
+    
+    console.log('data received');
+
+    res.send({success: true});
   });
 });
 
