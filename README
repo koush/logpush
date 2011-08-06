@@ -1,3 +1,8 @@
+logpush is a service that will let you curl a URL that identifies a specific device, and it will return that device log in real time.
+It works by sending a Android Cloud to Device Message that requests the device log. The device log is sent back over
+and then printed back to the original requestor.
+
+
 The Android side of things needs to support push notifications.
 
 Server Usage:
