@@ -38,7 +38,7 @@ Code for sendLog:
 
 
 
-```
+```java
 
 public final static String LINE_SEPARATOR = System.getProperty("line.separator");
 static void sendLog(Intent intent) {
