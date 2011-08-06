@@ -35,6 +35,9 @@ if ("log".equals(type)) {
   
 
 Code for sendLog:
+
+
+
 ```
 
 public final static String LINE_SEPARATOR = System.getProperty("line.separator");
@@ -67,3 +70,5 @@ static void sendLog(Intent intent) {
     }.start();
 }
 ```
+
+
