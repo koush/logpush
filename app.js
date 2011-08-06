@@ -151,6 +151,7 @@ app.get('/:registration_id', function(req, res) {
     };
     
     data['data.type'] = 'log';
+    data['data.registration_id'] = registrationId;
     post({ url: 'http://android.apis.google.com/c2dm/send', data: data, headers: { Authorization: 'GoogleLogin auth=' + auth } }, function(err, data) {
       if (err) {
         res.send(err);
