@@ -36,33 +36,33 @@ if ("log".equals(type)) {
 
 Code for sendLog:
 ```java
-    public final static String LINE_SEPARATOR = System.getProperty("line.separator");
-    static void sendLog(Intent intent) {
-        final String registrationId = intent.getStringExtra("registration_id");
-        if (registrationId == null)
-            return;
-        new Thread() {
-            public void run() {
-                AndroidHttpClient client = AndroidHttpClient.newInstance("LogPush");
-                try{
-                    ArrayList<String> commandLine = new ArrayList<String>();
-                    commandLine.add("logcat");
-                    commandLine.add("-d");
+public final static String LINE_SEPARATOR = System.getProperty("line.separator");
+static void sendLog(Intent intent) {
+    final String registrationId = intent.getStringExtra("registration_id");
+    if (registrationId == null)
+        return;
+    new Thread() {
+        public void run() {
+            AndroidHttpClient client = AndroidHttpClient.newInstance("LogPush");
+            try{
+                ArrayList<String> commandLine = new ArrayList<String>();
+                commandLine.add("logcat");
+                commandLine.add("-d");
 
-                    Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[0]));
-                    byte[] data = StreamUtility.readToEndAsArray(process.getInputStream());
-                    HttpPost post = new HttpPost("https://logpush.deployfu.com/" + registrationId);
-                    post.setEntity(new ByteArrayEntity(data));
-                    post.setHeader("Content-Type", "application/binary");
-                    HttpResponse resp = client.execute(post);
-                    String contents = StreamUtility.readToEnd(resp.getEntity().getContent());
-                    Log.i("LogPush", contents);
-                } 
-                catch (IOException e){
-                    client.close();
-                    e.printStackTrace();
-                } 
-            }
-        }.start();
-    }
+                Process process = Runtime.getRuntime().exec(commandLine.toArray(new String[0]));
+                byte[] data = StreamUtility.readToEndAsArray(process.getInputStream());
+                HttpPost post = new HttpPost("https://logpush.deployfu.com/" + registrationId);
+                post.setEntity(new ByteArrayEntity(data));
+                post.setHeader("Content-Type", "application/binary");
+                HttpResponse resp = client.execute(post);
+                String contents = StreamUtility.readToEnd(resp.getEntity().getContent());
+                Log.i("LogPush", contents);
+            } 
+            catch (IOException e){
+                client.close();
+                e.printStackTrace();
+            } 
+        }
+    }.start();
+}
 ```
