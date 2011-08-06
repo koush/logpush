@@ -28,10 +28,13 @@ Add this permission:
 
 On your C2DM intent:
 
+
+```java
 String type = intent.getStringExtra("type");
 if ("log".equals(type)) {
   sendLog(intent);
 }
+```
   
 
 Code for sendLog:
