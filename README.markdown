@@ -5,7 +5,7 @@ and then printed back to the original requestor.
 
 
 Developer Usage Instructions:
-GET request on /<registration_id>?username=....&password=....
+GET request on /*registration_id*?username=....&password=....
 
 registration_id: the Android C2DM registration for the device.
 username: google account associated with this push registration
