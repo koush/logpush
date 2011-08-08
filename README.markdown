@@ -1,11 +1,10 @@
-logpush is a service that will let you curl a URL that identifies a specific device, and it will return that device log in real time.
-It works by sending a Android Cloud to Device Message that requests the device log. The device log is sent back over
+logpush is a service that will let you open a URL in a browser that identifies a specific device, and it will return that device log in real time.
+
+logpush works by sending a Android Cloud to Device Message that requests the device log. The device log is sent back over
 and then printed back to the original requestor.
 
 
-The Android side of things needs to support push notifications.
-
-Server Usage:
+Developer Usage Instructions:
 GET request on /<registration_id>?username=....&password=....
 
 registration_id: the Android C2DM registration for the device.
@@ -15,7 +14,7 @@ password: password for above google account
 Ie,
 curl -v 'https://logpush.deployfu.com/K77JZE72_Fxqnwzz3H50SID0qMw8OfjlfwztCV00AhtWuyTbwSVMZxZBm.....?username=me@example.com&password=swordfish'
 
-This will get you a log of the given Android device.
+Or open the above url in a browser. This will get you a log of the given Android device.
 It's also possible to get a streaming log, but that doesn't play well behind nginx, EC2 Load balancer, and other reverse proxies.
 Need to look into that more later.
 
