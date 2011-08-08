@@ -23,7 +23,12 @@ How to hook things up on the Android side:
 
 Set up push (RTFM on how to do that).
 Add this permission:
+
+
+```xml
 <uses-permission android:name="android.permission.READ_LOGS" />
+```
+
 
 On your C2DM intent:
 
