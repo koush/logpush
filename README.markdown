@@ -5,14 +5,23 @@ and then printed back to the original requestor.
 
 
 Developer Usage Instructions:
-GET request on /*registration_id*?username=....&password=....
+GET request on:
+
+```
+/*registration_id*?username=....&password=....
+```
+
 
 registration_id: the Android C2DM registration for the device.
 username: google account associated with this push registration
 password: password for above google account
 
 Ie,
+
+
+```bash
 curl -v 'https://logpush.deployfu.com/K77JZE72_Fxqnwzz3H50SID0qMw8OfjlfwztCV00AhtWuyTbwSVMZxZBm.....?username=me@example.com&password=swordfish'
+```
 
 Or open the above url in a browser. This will get you a log of the given Android device.
 It's also possible to get a streaming log, but that doesn't play well behind nginx, EC2 Load balancer, and other reverse proxies.
