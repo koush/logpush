@@ -73,6 +73,7 @@ var post = function(options, callback) {
 var registrations = {};
 
 app.get('/:registration_id', function(req, res) {
+  console.log('GET :/registration_id');
   res.header('Cache-Control', 'no-cache');
   res.header('Expires', 'Fri, 31 Dec 1998 12:00:00 GMT');
 
@@ -165,6 +166,7 @@ app.get('/:registration_id', function(req, res) {
 });
 
 app.post('/:registration_id', function(req, res) {
+  console.log('POST :/registration_id');
   res.header('Cache-Control', 'no-cache');
   res.header('Expires', 'Fri, 31 Dec 1998 12:00:00 GMT');
   console.log('post received');
